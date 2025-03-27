@@ -1,0 +1,25 @@
+﻿@inherits LayoutComponentBase
+
+<!--  
+layout for login page 
+no access to nav bar
+so that only approriate users can actually use functionalities
+--->
+<div class="page">
+
+    <div class="top-row px-4">
+        <div style="width:80%; display: inline-block; float:left; margin-right: 10px;">
+            <h1>Release Notes Management Tool</h1>
+
+        </div>
+        <div style="width: 19%; display: inline; float: right">
+            <!-- space for an about hyperlink-->
+        </div>
+    </div>
+    <main>
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+

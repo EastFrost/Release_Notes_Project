@@ -1,0 +1,37 @@
+﻿@inherits LayoutComponentBase
+
+
+
+
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+       
+
+
+    <main>
+        <div class="top-row px-4">
+            <div style="width:80%; display: inline-block; float:left; margin-right: 10px;">
+                <h1>Release Notes Management Tool</h1>
+
+            </div>
+            <div style="width: 19%; display: inline; float: right">
+                <p>Logged in as: @Users.currentUser.name</p>
+                <a href="/">Sign Out</a>
+
+            </div>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>

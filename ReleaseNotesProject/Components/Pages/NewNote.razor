@@ -1,0 +1,66 @@
+﻿@page "/newnote"
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
+
+<div><h3>NewNote</h3></div>
+<div>
+
+    <!-- addNote form -->
+    <EditForm Model=@newNote FormName="AddNote" OnValidSubmit="HandleSubmit">
+
+        <div class="card-body">
+            <div class="form-group">
+                <label for="app">App</label><br>
+                <InputSelect id="app" @bind-Value=@selectedApp>
+                    <!-- first option hidden to funtion as placeholder text -->
+                    <!-- need to remove selectability, currently able to select -->
+                    <option hidden value="">Select An App</option>
+                    <option value="Invoice Management Tool">Invoice Management Tool</option>
+                    <option value="Parts Management Tool">Parts Management Tool</option>
+                </InputSelect>
+            </div>
+
+            <div class="form-group">
+                <label for="note">Note</label>
+                <InputTextArea id="note" class="form-control" @bind-Value=@noteContents rows="4"/>
+            </div>
+
+            <div><br></div> 
+
+            <div>
+                <button type="submit" class="btn btn-primary" value="save">
+                    <span>Submit</span>
+                </button>
+                <button type="reset" class="btn btn-primary" value="clear">
+                    <span>Clear</span>
+                </button>
+            </div>
+
+        </div>
+
+
+    </EditForm>
+
+
+
+</div>
+
+@code {
+    //initialize new note and related properties
+    //newNote initialized as static for carry over to confirmation page
+    public static ReleaseNote newNote = new ReleaseNote();
+    string selectedApp = string.Empty;
+    string noteContents = string.Empty;
+
+    private async Task HandleSubmit()
+    {
+        newNote = new ReleaseNote(selectedApp,noteContents,Users.currentUser.name);
+        //insert new note into table and navigate to confirmation page
+        Connector.InsertNewNote(newNote.guid, newNote.appName, newNote.releaseNote, newNote.createdBy, newNote.createdDate.ToString());
+        NavigationManager.NavigateTo("/newnote/confirmation");
+       
+
+    }
+
+
+}

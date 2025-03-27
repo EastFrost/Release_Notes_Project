@@ -1,0 +1,117 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@using ReleaseNotesProject.Components.Layout
+@layout LoginLayout
+@inject NavigationManager NavigationManager
+
+
+
+<PageTitle>Login</PageTitle>
+
+
+<div>
+
+    <!-- login form -->
+    <EditForm Model=@User FormName="loginForm" OnSubmit="HandleLogin">
+        <div><br></div>
+
+
+
+        <div style="width:50%; float:left; margin-right: 10px;" class="card-body">
+
+            <div><h5>Login</h5></div>
+            <!-- user input -->
+            <div class="form-group">
+                <label for="email">
+                    Email address
+                </label>
+                <InputText id="email" class="form-control" @bind-Value="currentUser"/>
+            </div>
+            <!-- password input -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <InputText type="password" id="pass" class="form-control" @bind-Value="currentPass"/>
+            </div>
+
+            <div><br></div>
+
+            <div>
+                <button type="submit" class="btn btn-primary" value="save">
+                    <span>Login</span>
+                </button>
+
+                <button type="reset" class="btn btn-primary" value="clear">
+                    <span>Clear</span>
+                </button>
+
+            </div>
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="alert alert-danger mt-3">
+                    @errorMessage
+                </div>
+            }
+
+
+        </div>
+    </EditForm>
+
+
+</div>
+
+
+
+@code {
+
+    private string errorMessage = string.Empty;
+    Users User = new Users();
+    private string currentPass = string.Empty;
+    private string currentUser = string.Empty;
+    private bool isValidUser = false;
+    private bool isValidPass = false;
+
+
+    private async Task HandleLogin()
+    {
+
+
+        foreach (Users user in Users.AllUsers)
+        {
+  
+            //set current user of app
+            if (currentPass == user.password && currentUser == user.email)
+            {
+                isValidPass = true;
+                isValidUser = true;
+                Users.currentUser = user;
+
+            }
+        }
+
+
+        if (isValidPass && isValidUser)
+        {
+
+
+            // Navigate to home page after successful login
+            NavigationManager.NavigateTo("/viewrecords");
+        }
+        else
+        {
+            //set login error
+            errorMessage = $"Invalid email or password";
+            //from previous iteration, attempted to validate password and username independently for better error msging
+            //left for future testing
+            isValidPass = false;
+            isValidUser = false;
+        }
+
+            
+           
+        }
+        
+    
+    
+    }
+
+    

@@ -1,0 +1,42 @@
+﻿@page "/newnote/confirmation"
+<div>
+    
+
+<h3>Confirmation</h3>
+<p>You have successfully created a new note</p>
+</div>
+<div>
+    <!-- vertical table for confirmation display -->
+<table class="table">
+    <tr>
+        <th>App Name:</th>
+        <td>@newNoteConfirm.appName</td>
+    </tr>
+    <tr>
+        <th>Release Note:</th>
+        <td>@newNoteConfirm.releaseNote</td>
+    </tr>
+    <tr>
+        <th>Created By</th>
+        <td>@newNoteConfirm.createdBy</td>
+    </tr>
+    <tr>
+        <th>Created Date</th>
+        <td>@newNoteConfirm.createdDate</td>
+    </tr>
+</table>
+</div>
+
+
+
+
+@code {
+
+    //link newly created note from previous page
+    ReleaseNote newNoteConfirm = NewNote.newNote;
+
+    //space to add edit functionality
+
+
+
+}
