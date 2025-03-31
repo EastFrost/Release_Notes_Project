@@ -1,4 +1,6 @@
-﻿namespace ReleaseNotesProject
+﻿using System.Globalization;
+
+namespace ReleaseNotesProject
 {
     public class ReleaseNote
     {
@@ -9,7 +11,6 @@
         public string releaseNote { get; private set; }
         public string createdBy { get; private set; }
         public string createdDate { get; private set; }
-
 
 
         //datetime and guid objects for new note creation

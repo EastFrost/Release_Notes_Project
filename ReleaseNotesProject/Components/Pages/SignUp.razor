@@ -1,43 +1,55 @@
-﻿@page "/"
+﻿@page "/signup"
 @rendermode InteractiveServer
 @using ReleaseNotesProject.Components.Layout
 @layout LoginLayout
 @inject NavigationManager NavigationManager
 
-
-
-<PageTitle>Login</PageTitle>
+<PageTitle>Sign Up</PageTitle>
 
 
 <div>
 
     <!-- login form -->
-    <EditForm Model=@User FormName="loginForm" OnSubmit="HandleLogin">
+    <EditForm Model=@User FormName="signupForm" OnSubmit="HandleSignUp">
         <div><br></div>
 
 
 
         <div style="width:50%; float:left; margin-right: 10px;" class="card-body">
 
-            <div><h5>Login</h5></div>
+            <div><h5>Sign Up</h5></div>
             <!-- user input -->
             <div class="form-group">
                 <label for="email">
                     Email address
                 </label>
-                <InputText id="email" class="form-control" @bind-Value="currentEmail"/>
+                <InputText id="email" class="form-control" @bind-Value="currentEmail" />
             </div>
             <!-- password input -->
             <div class="form-group">
                 <label for="password">Password</label>
-                <InputText type="password" id="pass" class="form-control" @bind-Value="currentPass"/>
+                <InputText type="password" id="pass" class="form-control" @bind-Value="currentPass" />
+            </div>
+
+            <div class="form-group">
+                <label for="name">
+                    Full Name
+                </label>
+                <InputText id="name" class="form-control" @bind-Value="currentName" />
+            </div>
+
+            <div class="form-group">
+                <label for="admincode">
+                    Admin Code
+                </label>
+                <InputText id="admincode" class="form-control" @bind-Value="currentName" />
             </div>
 
             <div><br></div>
 
             <div>
                 <button type="submit" class="btn btn-primary" value="save">
-                    <span>Login</span>
+                    <span>Sign Up</span>
                 </button>
 
                 <button type="reset" class="btn btn-primary" value="clear">
@@ -48,12 +60,6 @@
 
             <div><br></div>
 
-            <div>
-                <label for="rememberMe">Remember Me</label>
-                <InputCheckbox id="remember" @bind-Value="rememberMe" />
-
-            </div>
-            <div><br></div>
 
 
             @if (!string.IsNullOrEmpty(errorMessage))
@@ -63,11 +69,6 @@
                 </div>
             }
 
-            <div>
-                <button type="button" @onclick="SignUp" class="btn btn-primary" value="signup">
-                    <span>Sign Up</span>
-                </button>
-            </div>
         </div>
     </EditForm>
 
@@ -82,47 +83,19 @@
 </div>
 
 
-
 @code {
 
     private string errorMessage = string.Empty;
     Users User = new Users();
     private string currentPass = string.Empty;
     private string currentEmail = string.Empty;
+    private string currentName = string.Empty;
+    public 
     private bool isValidUser = false;
     private bool isValidPass = false;
-    private bool rememberMe = Users.rememberMe;
+    private bool isValidName = false;
 
-
-
-    protected override async Task OnInitializedAsync()
-    {
-
-
-        if (rememberMe == true)
-        {
-
-            currentEmail = Users.currentUser.email;
-            currentPass = Users.currentUser.password;
-
-        }
-        else
-        {
-          
-            
-
-        }
-
-
-    }
-
-    protected void SignUp()
-    {
-        NavigationManager.NavigateTo("/signup");
-    }
-
-
-    private async Task HandleLogin()
+    private async Task HandleSignUp()
     {
 
 
@@ -134,18 +107,28 @@
             {
                 isValidPass = true;
                 isValidUser = true;
-                Users.currentUser = user;
+                isValidName = true;
+                
 
             }
         }
 
+        if (!string.IsNullOrEmpty(currentPass) && !string.IsNullOrEmpty(currentEmail) && !string.IsNullOrEmpty(currentName))
+        {
+            isValidPass = true;
+            isValidUser = true;
+            isValidName = true;
 
-        if (isValidPass && isValidUser)
+        }
+        
+
+
+        if (isValidPass && isValidUser && isValidName)
         {
 
 
             // Navigate to home page after successful login
-            Users.rememberMe = rememberMe;
+           
             NavigationManager.NavigateTo("/viewrecords");
         }
         else
@@ -158,12 +141,10 @@
             isValidUser = false;
         }
 
-            
-           
-        }
-        
-    
-    
+
+
     }
 
-    
+
+
+}

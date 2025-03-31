@@ -1,0 +1,61 @@
+﻿@page "/newapp"
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
+
+<div><h3>New App</h3></div>
+<div>
+
+    <!-- addApp form -->
+    <EditForm Model=@newApp FormName="AddApp" OnValidSubmit="HandleSubmit">
+
+        <div class="card-body">
+
+
+            <div class="form-group">
+                <label for="app">App Name</label>
+                <InputText id="app" class="form-control" @bind-Value=@appName/>
+            </div>
+
+            <div><br></div>
+
+            <div>
+                <button type="submit" class="btn btn-primary" value="save">
+                    <span>Submit</span>
+                </button>
+                <button type="reset" class="btn btn-primary" value="clear">
+                    <span>Clear</span>
+                </button>
+            </div>
+
+        </div>
+
+
+    </EditForm>
+
+
+
+</div>
+
+@code {
+    //initialize new app and related properties
+    //newNote initialized as static for carry over to confirmation page
+    public static SQLApps newApp = new SQLApps();
+
+    string appName = string.Empty;
+
+
+
+
+
+    private async Task HandleSubmit()
+    {
+        newApp = new SQLApps(appName);
+        //insert new note into table and navigate to confirmation page
+        Connector.InsertNewApp(newApp.appName);
+        NavigationManager.NavigateTo("/newnote");
+
+
+    }
+
+
+}

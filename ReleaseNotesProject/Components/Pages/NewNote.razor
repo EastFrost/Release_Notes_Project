@@ -2,7 +2,7 @@
 @rendermode InteractiveServer
 @inject NavigationManager NavigationManager
 
-<div><h3>NewNote</h3></div>
+<div><h3>New Note</h3></div>
 <div>
 
     <!-- addNote form -->
@@ -15,8 +15,12 @@
                     <!-- first option hidden to funtion as placeholder text -->
                     <!-- need to remove selectability, currently able to select -->
                     <option hidden value="">Select An App</option>
-                    <option value="Invoice Management Tool">Invoice Management Tool</option>
-                    <option value="Parts Management Tool">Parts Management Tool</option>
+                    @foreach (var app in currentApps)
+                    {
+
+                        <option value="@app.appName">@app.appName</option>
+                        
+                    }
                 </InputSelect>
             </div>
 
@@ -51,6 +55,19 @@
     public static ReleaseNote newNote = new ReleaseNote();
     string selectedApp = string.Empty;
     string noteContents = string.Empty;
+    private List<SQLApps> currentApps;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        //load notes from sql into list for viewing
+        currentApps = Connector.LoadApps();
+
+
+
+
+    }
 
     private async Task HandleSubmit()
     {

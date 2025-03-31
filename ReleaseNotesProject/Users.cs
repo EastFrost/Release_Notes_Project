@@ -8,9 +8,10 @@ namespace ReleaseNotesProject
         public string email { get; private set; }
         public string password { get; private set; }
         public string name { get; private set; }
+        public int isAdmin { get; private set; }
         //global currentUser Variable
         public static Users currentUser { get; set; } = new Users();
-
+        public static bool rememberMe { get; set; }
 
 
         //static lists to retrieve all existing notes
@@ -20,12 +21,14 @@ namespace ReleaseNotesProject
         {
             get { return allUsers.AsReadOnly(); }
         }
+
         //constructor for retreiving user objects
-        public Users(string email, string password, string name)
+        public Users(string email, string password, string name, int isAdmin)
         {
             this.email = email;
             this.password = password;
             this.name = name;
+            this.isAdmin = isAdmin;
      
         }
         public Users()

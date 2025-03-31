@@ -1,9 +1,7 @@
+using Blazorise;
 using Microsoft.EntityFrameworkCore.Query;
 using ReleaseNotesProject;
 using ReleaseNotesProject.Components;
-
-
-
 
 
 
@@ -12,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+
 
 var app = builder.Build();
 
@@ -28,6 +28,7 @@ app.UseHttpsRedirection();
     
 app.UseStaticFiles();
 app.UseAntiforgery();
+
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();

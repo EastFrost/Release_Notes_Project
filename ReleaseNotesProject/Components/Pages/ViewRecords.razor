@@ -38,7 +38,7 @@
                         <td>@note.appName</td>
                         <td>@note.releaseNote</td>
                         <td>@note.createdBy</td>
-                        <td>@note.createdDate</td>
+                        <td>@note.createdDate[0..9].Trim()</td>
                     </tr>
                 }
             </tbody>
@@ -62,6 +62,10 @@
         await Task.Delay(500);
         //load notes from sql into list for viewing
         releaseNotes = Connector.LoadNotes();
+        releaseNotes.Sort(delegate (ReleaseNote x, ReleaseNote y)
+        {
+            return x.createdDate.CompareTo(y.createdDate);
+        });
 
 
 

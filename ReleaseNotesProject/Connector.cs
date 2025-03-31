@@ -35,7 +35,17 @@ namespace ReleaseNotesProject
 
         }
 
-        
+        //construct insert sql command for new app creation
+        public static string InsertNewAppCommandText(string appName)
+        {
+            
+            string command = $"INSERT INTO apps (appname) VALUES (\"{appName}\");";
+            return command;
+
+        }
+
+
+
         public static void InsertNewNote(string GUID, string appName, string noteContents, string creator, string dateCreated)
         {
             //using statements for disposal of connection and command objects
@@ -54,6 +64,28 @@ namespace ReleaseNotesProject
             }
 
         }
+
+        //
+        public static void InsertNewApp(string appName)
+        {
+            //using statements for disposal of connection and command objects
+            using (MySqlConnection conn = new MySqlConnection(connstring))
+            {
+                using (MySqlCommand cmd = new MySqlCommand())
+                {
+                    cmd.Connection = conn;
+                    conn.Open();
+
+                    cmd.CommandText = InsertNewAppCommandText(appName);
+                    cmd.ExecuteNonQuery();
+
+                    conn.Close();
+                }
+            }
+
+        }
+
+
 
 
         //read existing users from db and load them into a list for later assignment
@@ -74,7 +106,7 @@ namespace ReleaseNotesProject
                 {
                     while (rdr.Read()) { 
                     
-                       allUsers.Add(new Users(rdr["username"].ToString(), rdr["password"].ToString(), rdr["name"].ToString()));
+                       allUsers.Add(new Users(rdr["username"].ToString(), rdr["password"].ToString(), rdr["name"].ToString(), int.Parse(rdr["isAdmin"].ToString())));
                         Console.WriteLine($"(...) user:{allUsers.Last().email}<>pass:{allUsers.Last().password}");
 
 
@@ -92,7 +124,7 @@ namespace ReleaseNotesProject
 
 
 
-        //read existing notes from db and load them into a list for later assignment
+        //read existing notes from db and load them into a list for later use
         public static List<ReleaseNote> LoadNotes()
         {
 
@@ -131,6 +163,44 @@ namespace ReleaseNotesProject
             return releaseNotes;
 
         }
+
+        //
+
+        //read existing apps from db and load them into a list for later use
+        public static List<SQLApps> LoadApps()
+        {
+
+
+            List<SQLApps> Apps = new List<SQLApps>();
+
+
+
+            //using statements for disposal of connection and reader objects
+            using (MySqlConnection conn = new MySqlConnection(connstring))
+            {
+                string cmdString = $"select * from apps";
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = cmdString;
+
+                conn.Open();
+                using (MySqlDataReader rdr = cmd.ExecuteReader())
+                {
+
+                    while (rdr.Read())
+                    {
+                        Apps.Add(new SQLApps(rdr["idapps"].ToString(), rdr["appname"].ToString()));
+                    }
+
+                    conn.Close();
+                }
+            }
+
+
+            return Apps;
+
+        }
+
 
     }
 }
