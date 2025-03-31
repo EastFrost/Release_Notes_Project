@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Primitives;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using System;
 using System.Data;
 
 namespace ReleaseNotesProject
@@ -44,6 +45,16 @@ namespace ReleaseNotesProject
 
         }
 
+        //construct insert sql command for new user creation
+        public static string InsertNewUserCommandText(string email, string password, string name)
+        {
+
+            string command = $"INSERT INTO users (username, password, name) VALUES (\"{email}\",\"{password}\",\"{name}\");";
+            return command;
+
+        }
+
+
 
 
         public static void InsertNewNote(string GUID, string appName, string noteContents, string creator, string dateCreated)
@@ -77,6 +88,26 @@ namespace ReleaseNotesProject
                     conn.Open();
 
                     cmd.CommandText = InsertNewAppCommandText(appName);
+                    cmd.ExecuteNonQuery();
+
+                    conn.Close();
+                }
+            }
+
+        }
+
+        //
+        public static void InsertNewUser(string email, string password, string name)
+        {
+            //using statements for disposal of connection and command objects
+            using (MySqlConnection conn = new MySqlConnection(connstring))
+            {
+                using (MySqlCommand cmd = new MySqlCommand())
+                {
+                    cmd.Connection = conn;
+                    conn.Open();
+
+                    cmd.CommandText = InsertNewUserCommandText(email, password, name);
                     cmd.ExecuteNonQuery();
 
                     conn.Close();

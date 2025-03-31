@@ -42,7 +42,7 @@
                 <label for="admincode">
                     Admin Code
                 </label>
-                <InputText id="admincode" class="form-control" @bind-Value="currentName" />
+                <InputText id="admincode" class="form-control" @bind-Value="currentToken" />
             </div>
 
             <div><br></div>
@@ -90,55 +90,48 @@
     private string currentPass = string.Empty;
     private string currentEmail = string.Empty;
     private string currentName = string.Empty;
-    public 
+    private string currentToken = string.Empty;
+    //hardcoded validation token
+    public string validationToken = "adminToken";
     private bool isValidUser = false;
     private bool isValidPass = false;
     private bool isValidName = false;
+    private bool isValidToken = false;
 
     private async Task HandleSignUp()
     {
 
 
-        foreach (Users user in Users.AllUsers)
-        {
 
-            //set current user of app
-            if (currentPass == user.password && currentEmail == user.email)
-            {
-                isValidPass = true;
-                isValidUser = true;
-                isValidName = true;
-                
-
-            }
-        }
-
-        if (!string.IsNullOrEmpty(currentPass) && !string.IsNullOrEmpty(currentEmail) && !string.IsNullOrEmpty(currentName))
+        if (!string.IsNullOrEmpty(currentPass) && !string.IsNullOrEmpty(currentEmail) && !string.IsNullOrEmpty(currentName) && currentToken == validationToken)
         {
             isValidPass = true;
             isValidUser = true;
             isValidName = true;
+            isValidToken = true;
+
+
+
 
         }
-        
 
 
-        if (isValidPass && isValidUser && isValidName)
+
+        if (isValidPass && isValidUser && isValidName && isValidToken)
         {
 
-
-            // Navigate to home page after successful login
+            Users.reloadUsers();
+            Connector.InsertNewUser(currentEmail, currentPass, currentName);
+            Users.currentUser = new Users(currentEmail, currentPass, currentName);
+            // Navigate to login page after signup
            
             NavigationManager.NavigateTo("/viewrecords");
         }
         else
         {
             //set login error
-            errorMessage = $"Invalid email or password";
-            //from previous iteration, attempted to validate password and username independently for better error msging
-            //left for future testing
-            isValidPass = false;
-            isValidUser = false;
+            errorMessage = $"Invalid signup values";
+
         }
 
 

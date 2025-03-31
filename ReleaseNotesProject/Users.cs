@@ -22,7 +22,13 @@ namespace ReleaseNotesProject
             get { return allUsers.AsReadOnly(); }
         }
 
-        //constructor for retreiving user objects
+
+        public static void reloadUsers()
+        {
+            allUsers = Connector.LoadUsers();
+        }
+
+        //constructor for retrieving user objects
         public Users(string email, string password, string name, int isAdmin)
         {
             this.email = email;
@@ -31,6 +37,16 @@ namespace ReleaseNotesProject
             this.isAdmin = isAdmin;
      
         }
+
+        public Users(string email, string password, string name)
+        {
+
+            this.email = email;
+            this.password = password;
+            this.name = name;
+
+        }
+
         public Users()
         {
             
