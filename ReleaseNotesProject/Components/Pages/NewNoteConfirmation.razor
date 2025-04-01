@@ -1,4 +1,10 @@
 ﻿@page "/newnote/confirmation"
+@inject NavigationManager NavigationManager
+
+
+
+<PageTitle>Confirmation</PageTitle>
+
 <div>
     
 
@@ -26,6 +32,11 @@
     </tr>
 </table>
 </div>
+<div>
+    <button type="button" @onclick="NavView" class="btn btn-primary" value="viewrecords">
+        <span>View Records</span>
+    </button>
+</div>
 
 
 
@@ -35,7 +46,11 @@
     //link newly created note from previous page
     ReleaseNote newNoteConfirm = NewNote.newNote;
 
-    //space to add edit functionality
+
+    protected void NavView()
+    {
+        NavigationManager.NavigateTo("/viewrecords");
+    }
 
 
 

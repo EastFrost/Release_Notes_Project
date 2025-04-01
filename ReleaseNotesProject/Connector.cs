@@ -138,7 +138,7 @@ namespace ReleaseNotesProject
                     while (rdr.Read()) { 
                     
                        allUsers.Add(new Users(rdr["username"].ToString(), rdr["password"].ToString(), rdr["name"].ToString(), int.Parse(rdr["isAdmin"].ToString())));
-                        Console.WriteLine($"(...) user:{allUsers.Last().email}<>pass:{allUsers.Last().password}");
+                       
 
 
                     }

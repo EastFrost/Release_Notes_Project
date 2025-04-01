@@ -87,18 +87,20 @@
 
     private string errorMessage = string.Empty;
     Users User = new Users();
+    //page functions for storing user info
+    //and validation
     private string currentPass = string.Empty;
     private string currentEmail = string.Empty;
     private bool isValidUser = false;
     private bool isValidPass = false;
+    //store rememberMe var across pages
     private bool rememberMe = Users.rememberMe;
 
 
 
     protected override async Task OnInitializedAsync()
     {
-
-
+        //retain login values if remeberMe is checked
         if (rememberMe == true)
         {
 
@@ -106,18 +108,12 @@
             currentPass = Users.currentUser.password;
 
         }
-        else
-        {
-          
-            
-
-        }
-
 
     }
 
     protected void SignUp()
     {
+        //navigate to signup
         NavigationManager.NavigateTo("/signup");
     }
 
@@ -125,7 +121,7 @@
     private async Task HandleLogin()
     {
 
-
+        //iterate through list of users
         foreach (Users user in Users.AllUsers)
         {
 

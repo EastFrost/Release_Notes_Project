@@ -37,7 +37,7 @@ namespace ReleaseNotesProject
             this.isAdmin = isAdmin;
      
         }
-
+        //constructor for creating user objects
         public Users(string email, string password, string name)
         {
 

@@ -2,6 +2,8 @@
 @rendermode InteractiveServer
 @inject NavigationManager NavigationManager
 
+<PageTitle>New Note</PageTitle>
+
 <div><h3>New Note</h3></div>
 <div>
 
@@ -13,8 +15,8 @@
                 <label for="app">App</label><br>
                 <InputSelect id="app" @bind-Value=@selectedApp>
                     <!-- first option hidden to funtion as placeholder text -->
-                    <!-- need to remove selectability, currently able to select -->
                     <option hidden value="">Select An App</option>
+                    <!--dynamically populate options with all available apps-->
                     @foreach (var app in currentApps)
                     {
 

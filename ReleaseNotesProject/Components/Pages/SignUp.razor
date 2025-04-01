@@ -9,7 +9,7 @@
 
 <div>
 
-    <!-- login form -->
+    <!-- signup form -->
     <EditForm Model=@User FormName="signupForm" OnSubmit="HandleSignUp">
         <div><br></div>
 
@@ -87,12 +87,14 @@
 
     private string errorMessage = string.Empty;
     Users User = new Users();
+    //new user info vars
     private string currentPass = string.Empty;
     private string currentEmail = string.Empty;
     private string currentName = string.Empty;
     private string currentToken = string.Empty;
     //hardcoded validation token
     public string validationToken = "adminToken";
+    //validation bools
     private bool isValidUser = false;
     private bool isValidPass = false;
     private bool isValidName = false;
@@ -123,13 +125,13 @@
             Users.reloadUsers();
             Connector.InsertNewUser(currentEmail, currentPass, currentName);
             Users.currentUser = new Users(currentEmail, currentPass, currentName);
-            // Navigate to login page after signup
+            // Navigate to landing page after signup
            
             NavigationManager.NavigateTo("/viewrecords");
         }
         else
         {
-            //set login error
+            //set signup error
             errorMessage = $"Invalid signup values";
 
         }

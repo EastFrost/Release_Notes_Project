@@ -15,7 +15,7 @@
         }
 
 
-
+        //constructor for reading in apps
         public SQLApps(string appId, string appName)
         {
 
@@ -24,6 +24,7 @@
 
         }
 
+        //constructor for writing apps
         public SQLApps(string appName)
         {
 
